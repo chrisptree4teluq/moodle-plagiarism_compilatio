@@ -25,6 +25,8 @@
 
 namespace plagiarism_compilatio\output;
 
+use question_bank;
+
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
 require_once($CFG->dirroot . '/plagiarism/compilatio/lib.php');
@@ -548,8 +550,13 @@ class compilatio_frame {
             $quizid = $DB->get_field_sql($sql, [$cmid]);
 
             $modulecontext = \context_module::instance($cmid);
-            $quizquestions = qbank_helper::get_question_structure($quizid, $modulecontext);
-
+            if ($CFG->version < 2022060100) {
+                require_once($CFG->dirroot . '/mod/quiz/attemptlib.php');
+                $quiz = \quiz::create($quizid);
+                $quizquestions = $quiz->get_questions();
+            } else {
+                $quizquestions = qbank_helper::get_question_structure($quizid, $modulecontext);
+            }
             $questionselector .= "<div class='text-center'>";
 
             foreach ($quizquestions as $quizquestion) {
