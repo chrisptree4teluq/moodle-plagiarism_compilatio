@@ -51,7 +51,7 @@ class university_component {
      *
      * @var string|null
      */
-    public string|null $universitycomponentfield;
+    public string $universitycomponentfield;
 
     /**
      * Create the component helper.
