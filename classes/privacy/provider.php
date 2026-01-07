@@ -19,7 +19,7 @@
  *
  * @package    plagiarism_compilatio
  * @author     Compilatio <support@compilatio.net>
- * @copyright  2025 Compilatio.net {@link https://www.compilatio.net}
+ * @copyright  2026 Compilatio.net {@link https://www.compilatio.net}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -53,6 +53,7 @@ if (interface_exists('\core_plagiarism\privacy\plagiarism_user_provider')) {
      *
      * This interface is used if the core plagiarism user provider interface does not exist.
      */
+    /* phpcs:ignore */
     interface user_provider {
 
     }

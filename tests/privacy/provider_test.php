@@ -19,11 +19,11 @@
  *
  * @package    plagiarism_compilatio
  * @author     Compilatio <support@compilatio.net>
- * @copyright  2025 Compilatio.net {@link https://www.compilatio.net}
+ * @copyright  2026 Compilatio.net {@link https://www.compilatio.net}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace plagiarism_compilatio\tests\privacy;
+namespace plagiarism_compilatio\privacy;
 
 use core_privacy\local\metadata\collection;
 use plagiarism_compilatio\privacy\provider;

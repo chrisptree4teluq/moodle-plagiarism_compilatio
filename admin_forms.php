@@ -19,7 +19,7 @@
  *
  * @package    plagiarism_compilatio
  * @author     Compilatio <support@compilatio.net>
- * @copyright  2025 Compilatio.net {@link https://www.compilatio.net}
+ * @copyright  2026 Compilatio.net {@link https://www.compilatio.net}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,11 +28,11 @@ defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 require_once($CFG->dirroot . '/lib/formslib.php');
 
 use plagiarism_compilatio\compilatio\api;
-use plagiarism_compilatio\compilatio\course_module_settings;
+use plagiarism_compilatio\compilatio\university_component;
 
 /**
  * Setup form class
- * @copyright  2025 Compilatio.net {@link https://www.compilatio.net}
+ * @copyright  2026 Compilatio.net {@link https://www.compilatio.net}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class compilatio_setup_form extends moodleform {
@@ -43,12 +43,12 @@ class compilatio_setup_form extends moodleform {
     protected function definition() {
         global $CFG, $DB;
 
-        $mform = & $this->_form;
+        $mform = $this->_form;
         $mform->addElement('html', get_string('compilatioexplain', 'plagiarism_compilatio'));
         $mform->addElement('checkbox', 'enabled', get_string('activate_compilatio', 'plagiarism_compilatio'));
 
         $mform->addElement('html', '<p><small class="font-italic">' .
-                           get_string("disclaimer_data", "plagiarism_compilatio") . '</small></p>');
+            get_string("disclaimer_data", "plagiarism_compilatio") . '</small></p>');
 
         $mform->addElement('text', 'apikey', get_string('apikey', 'plagiarism_compilatio'));
         $mform->setType('apikey', PARAM_RAW);
@@ -118,6 +118,40 @@ class compilatio_setup_form extends moodleform {
         $mform->addElement('checkbox', 'keep_docs_indexed', get_string("keep_docs_indexed", "plagiarism_compilatio"));
         $mform->setDefault('keep_docs_indexed', 1);
         $mform->addHelpButton('keep_docs_indexed', 'keep_docs_indexed', 'plagiarism_compilatio');
+
+        $compilatiouniversitycomponent = new university_component($DB);
+
+        $universitycomponentoptions = $compilatiouniversitycomponent->user_field_provider();
+        $universitycomponentgroup = [];
+        $universitycomponentgroup[] = $mform->createElement(
+            'select',
+            'university_component_type',
+            '',
+            $universitycomponentoptions
+        );
+        $universitycomponentgroup[] = $mform->createElement(
+            'html',
+            '<div>
+                <small class="font-italic">' .
+                    get_string('admin_university_composable_label', 'plagiarism_compilatio') .
+                '</small>
+            </div>'
+        );
+
+        $mform->addGroup(
+            $universitycomponentgroup,
+            'university_component_group',
+            get_string('user_management', 'plagiarism_compilatio'),
+            '',
+            false
+        );
+
+        $mform->setDefault(
+            'university_component_type',
+            $compilatiouniversitycomponent->universitycomponentfield ??
+                get_string('university_composable_none', 'plagiarism_compilatio')
+        );
+        $mform->setType('university_component_type', PARAM_ALPHANUMEXT);
 
         $radioarray = [];
         $radioarray[] = $mform->createElement(

@@ -19,15 +19,15 @@
  *
  * @package   plagiarism_compilatio
  * @author    Compilatio <support@compilatio.net>
- * @copyright 2025 Compilatio.net {@link https://www.compilatio.net}
+ * @copyright 2026 Compilatio.net {@link https://www.compilatio.net}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-$plugin->version    = 2025120300;
-$plugin->requires   = 2021051705;
+$plugin->version    = 2026010700;
+$plugin->requires   = 2021051705; // Moodle 3.11 minimum.
 $plugin->cron       = 300; // Only run every 5 minutes.
 $plugin->component  = 'plagiarism_compilatio';
 $plugin->maturity   = MATURITY_STABLE;
-$plugin->release    = '3.2.9';
+$plugin->release    = '3.2.10';
